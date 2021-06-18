@@ -43,7 +43,7 @@ class GameruleCommand extends Command{
         if(!isset($args[0])){
             $values = [];
             foreach(GameRule::$gameRules as $key => $rule){
-                $values[] = $key . " = " . GameRule::getGameRuleValue($rule->getName(), $sender->getLevel(), true);
+                $values[] = $key . " = " . GameRule::getGameRuleValue($rule->getName(), $sender instanceof Player ? $sender->getLevel() : VanillaX::getInstance()->getServer()->getDefaultLevel(), true);
             }
             $sender->sendMessage(implode(", ", $values));
             return;
@@ -56,7 +56,7 @@ class GameruleCommand extends Command{
             return;
         }
         if(!isset($args[1])){
-            $sender->sendMessage(strtolower($gameRule->getName()) . " = " . GameRule::getGameRuleValue($gameRule->getName(), $sender->getLevel(), true));
+            $sender->sendMessage(strtolower($gameRule->getName()) . " = " . GameRule::getGameRuleValue($gameRule->getName(), $sender instanceof Player ? $sender->getLevel() : VanillaX::getInstance()->getServer()->getDefaultLevel(), true));
             return;
         }
         $pk = new GameRulesChangedPacket();
